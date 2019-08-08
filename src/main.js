@@ -491,7 +491,7 @@ const drawBoardTasks = () => {
 
 const drawComponents = (container, component) => {
   const wrapper = document.querySelector(container);
-  wrapper.insertAdjacentHTML('beforeend',component());
+  wrapper.insertAdjacentHTML('beforeend', component());
 };
 
 
