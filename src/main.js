@@ -1,4 +1,4 @@
-'use strict';
+`use strict`;
 
 const drawMenu = () => {
   return `
@@ -492,18 +492,18 @@ const drawBoardTasks = () => {
 
 const drawComponents = (container, component) => {
   const wrapper = document.querySelector(container);
-  wrapper.insertAdjacentHTML('beforeend', component());
+  wrapper.insertAdjacentHTML(`beforeend`, component());
 };
 
 
-drawComponents('.main__control', drawMenu);
-drawComponents('.main', drawSearch);
-drawComponents('.main', drawMainFilter);
-drawComponents('.main', drawBoard);
-drawComponents('.board', drawBoardFilter);
-drawComponents('.board', drawBoardTasks);
-drawComponents('.board__tasks', drawForm);
-drawComponents('.board__tasks', drawCard);
-drawComponents('.board__tasks', drawCard);
-drawComponents('.board__tasks', drawCard);
-drawComponents('.board__tasks', drawBtn);
+drawComponents(`.main__control`, drawMenu);
+drawComponents(`.main`, drawSearch);
+drawComponents(`.main`, drawMainFilter);
+drawComponents(`.main`, drawBoard);
+drawComponents(`.board`, drawBoardFilter);
+drawComponents(`.board`, drawBoardTasks);
+drawComponents(`.board__tasks`, drawForm);
+drawComponents(`.board__tasks`, drawCard);
+drawComponents(`.board__tasks`, drawCard);
+drawComponents(`.board__tasks`, drawCard);
+drawComponents(`.board__tasks`, drawBtn);
