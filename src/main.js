@@ -476,7 +476,9 @@
   drawComponents(`.board`, drawBoardTasks);
   drawComponents(`.board__tasks`, drawForm);
 
-  for (let i = 0; i < 3; i++) drawComponents(`.board__tasks`, drawCard);
+  for (let i = 0; i < 3; i++) {
+    drawComponents(`.board__tasks`, drawCard);
+  }
 
   drawComponents(`.board__tasks`, drawLoadMore);
 
