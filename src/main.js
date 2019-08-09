@@ -2,9 +2,7 @@
 
 (function () {
 
-  const drawMenu = () => {
-    return `
-      <section class="control__btn-wrap">
+  const drawMenu = () => `<section class="control__btn-wrap">
         <input
           type="radio"
           name="control"
@@ -33,11 +31,8 @@
         >
       </section>
     `;
-  };
 
-  const drawSearch = () => {
-    return `
-      <section class="main__search search container">
+  const drawSearch = () => `<section class="main__search search container">
         <input
           type="text"
           id="search__input"
@@ -47,11 +42,8 @@
         <label class="visually-hidden" for="search__input">Search</label>
       </section>
     `;
-  };
 
-  const drawMainFilter = () => {
-    return `
-      <section class="main__filter filter container">
+  const drawMainFilter = () => `<section class="main__filter filter container">
         <input
           type="radio"
           id="filter__all"
@@ -120,21 +112,15 @@
         >
       </section>
     `;
-  };
 
-  const drawBoardFilter = () => {
-    return `
-      <div class="board__filter-list">
+  const drawBoardFilter = () => `<div class="board__filter-list">
         <a href="#" class="board__filter">SORT BY DEFAULT</a>
         <a href="#" class="board__filter">SORT BY DATE up</a>
         <a href="#" class="board__filter">SORT BY DATE down</a>
       </div>
     `;
-  };
 
-  const drawCard = () => {
-    return `
-      <article class="card">
+  const drawCard = () => `<article class="card">
         <div class="card__form">
           <div class="card__inner">
             <div class="card__control">
@@ -200,11 +186,8 @@
         </div>
       </article>
     `;
-  };
 
-  const drawForm = () => {
-    return `
-      <article class="card card--edit card--yellow card--repeat">
+  const drawForm = () =>`<article class="card card--edit card--yellow card--repeat">
         <form class="card__form" method="get">
           <div class="card__inner">
             <div class="card__control">
@@ -472,25 +455,12 @@
         </form>
       </article>
     `;
-  };
 
-  const drawBtn = () => {
-    return `
-      <button class="load-more" type="button">load more</button>
-    `;
-  };
+  const drawLoadMore = () => `<button class="load-more" type="button">load more</button>`;
 
-  const drawBoard = () => {
-    return `
-      <section class="board container"></section>
-    `;
-  };
+  const drawBoard = () => `<section class="board container"></section>`;
 
-  const drawBoardTasks = () => {
-    return `
-      <div class="board__tasks"></div>
-    `;
-  };
+  const drawBoardTasks = () => `<div class="board__tasks"></div>`;
 
   const drawComponents = (container, component) => {
     const wrapper = document.querySelector(container);
@@ -505,9 +475,11 @@
   drawComponents(`.board`, drawBoardFilter);
   drawComponents(`.board`, drawBoardTasks);
   drawComponents(`.board__tasks`, drawForm);
-  drawComponents(`.board__tasks`, drawCard);
-  drawComponents(`.board__tasks`, drawCard);
-  drawComponents(`.board__tasks`, drawCard);
-  drawComponents(`.board__tasks`, drawBtn);
+
+  for(let i = 0; i < 3; i++) {
+    drawComponents(`.board__tasks`, drawCard);
+  };
+
+  drawComponents(`.board__tasks`, drawLoadMore);
 
 })();
