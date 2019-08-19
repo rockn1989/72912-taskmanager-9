@@ -73,7 +73,7 @@ const FILTERS_DATA = FILTERS.map((filterName) => {
     }; break;
     case `archive` : filterElement = {
       title: filterName,
-      count: ALL_TASKS.filter((isArchive) => {
+      count: ALL_TASKS.filter(({isArchive}) => {
         return isArchive;
       }).length
     }; break;
