@@ -34,78 +34,48 @@ for (let i = 0; i < COUNT_TASKS; i++) {
   ALL_TASKS.push(getTask());
 }
 
-const [EDIT_FORM] = [...ALL_TASKS];
+const [editTask, ...otherTasks] = ALL_TASKS;
 
-const FILTERS_DATA = FILTERS.map((el) => {
+const FILTERS_DATA = FILTERS.map((filterName) => {
   let filterElement = {};
-  switch (el) {
+  switch (filterName) {
     case `all` : filterElement = {
-      title: el,
-      count() {
-        return ALL_TASKS.length;
-      }
+      title: filterName,
+      count: ALL_TASKS.length
     }; break;
     case `overdue` : filterElement = {
-      title: el,
-      count() {
-        return 0;
-      }
+      title: filterName,
+      count: 0
     }; break;
     case `today`: filterElement = {
-      title: el,
-      count() {
-        return 0;
-      }
+      title: filterName,
+      count: 0
     }; break;
-    case `favorites` : filterElement = {
-      title: el,
-      count() {
-        const [...favoriteIsChecked] = ALL_TASKS.filter((elFavorite) => {
-          return elFavorite.isFavorite;
-        });
-
-        return favoriteIsChecked.length;
-      }
-    }; break;
-    case `repeating` : filterElement = {
-      title: el,
-      count() {
-        const repeatingDaysList = [];
-
-        ALL_TASKS.map((elRepeating) => {
-          let repDay;
-          for (let day in elRepeating.repeatingDays) {
-            if (elRepeating.repeatingDays.hasOwnProperty(day)) {
-              repDay = elRepeating.repeatingDays[day] ? repeatingDaysList.push(elRepeating) : ``;
-            }
-          }
-          return repDay;
-        });
-
-        return repeatingDaysList.length;
-      }
-    }; break;
+    case `favorites` :
+      filterElement = {
+        title: filterName,
+        count: ALL_TASKS.filter(({isFavorite}) => {
+          return isFavorite;
+        }).length
+      }; break;
+    case `repeating` :
+      filterElement = {
+        title: filterName,
+        count: ALL_TASKS.filter(({repeatingDays}) => {
+          return repeatingDays;
+        }).length
+      }; break;
     case `tags` : filterElement = {
-      title: el,
-      count() {
-        const tagsList = [];
-
-        ALL_TASKS.map((elTags) => {
-          tagsList.push([...elTags.tags].length);
-        });
-
-        return Math.max(...tagsList);
-      }
+      title: filterName,
+      count: ALL_TASKS.filter(({tags}) => {
+        return tags.size > 0;
+      }).length
     }; break;
     case `archive` : filterElement = {
-      title: el,
-      count() {
-        const [...archiveIsChecked] = ALL_TASKS.filter((elArchive) => {
-          return elArchive.isArchive;
-        });
-
-        return archiveIsChecked.length;
-      }
+      title: filterName,
+      count: ALL_TASKS.filter((isArchive) => {
+        return isArchive;
+      }).length
     }; break;
   }
   return filterElement;
@@ -116,8 +86,8 @@ const renderTasks = (container, component) => {
   document.querySelector(container).insertAdjacentHTML(`beforeend`, component);
 };
 
-renderTasks(`.board__tasks`, createEditFormTemplate(EDIT_FORM));
-renderTasks(`.board__tasks`, ALL_TASKS.slice(0, MAX_TASKS).map(createCardTemplate).join(``));
+renderTasks(`.board__tasks`, createEditFormTemplate(editTask));
+renderTasks(`.board__tasks`, otherTasks.slice(0, MAX_TASKS).map(createCardTemplate).join(``));
 renderTasks(`.filter`, FILTERS_DATA.map(getFilter).join(``), `beforeend`);
 renderComponent(`.board`, createLoadMoreBtnTemplate(), `beforeend`);
 
