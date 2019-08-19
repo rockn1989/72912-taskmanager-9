@@ -62,7 +62,7 @@ const FILTERS_DATA = FILTERS.map((filterName) => {
       filterElement = {
         title: filterName,
         count: ALL_TASKS.filter(({repeatingDays}) => {
-          return repeatingDays;
+          return repeatingDays.We;
         }).length
       }; break;
     case `tags` : filterElement = {
