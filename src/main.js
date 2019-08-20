@@ -28,57 +28,54 @@ const COUNT_TASKS = 17;
 const MAX_TASKS = 8;
 const ALL_TASKS = [];
 const FILTERS = [`all`, `overdue`, `today`, `favorites`, `repeating`, `tags`, `archive`];
-
+let editTask;
+let otherTasks;
 
 for (let i = 0; i < COUNT_TASKS; i++) {
   ALL_TASKS.push(getTask());
 }
 
-const [editTask, ...otherTasks] = ALL_TASKS;
+[editTask, ...otherTasks] = ALL_TASKS;
 
 const FILTERS_DATA = FILTERS.map((filterName) => {
-  let filterElement = {};
+  let filterCount;
   switch (filterName) {
-    case `all` : filterElement = {
-      title: filterName,
-      count: ALL_TASKS.length
-    }; break;
-    case `overdue` : filterElement = {
-      title: filterName,
-      count: 0
-    }; break;
-    case `today`: filterElement = {
-      title: filterName,
-      count: 0
-    }; break;
+    case `all` :
+      filterCount = ALL_TASKS.length;
+      break;
+    case `overdue` :
+      filterCount = 0;
+      break;
+    case `today`:
+      filterCount = 0;
+      break;
     case `favorites` :
-      filterElement = {
-        title: filterName,
-        count: ALL_TASKS.filter(({isFavorite}) => {
-          return isFavorite;
-        }).length
-      }; break;
+      filterCount = ALL_TASKS.filter(({isFavorite}) => {
+        return isFavorite;
+      }).length;
+      break;
     case `repeating` :
-      filterElement = {
-        title: filterName,
-        count: ALL_TASKS.filter(({repeatingDays}) => {
-          return repeatingDays.We;
-        }).length
-      }; break;
-    case `tags` : filterElement = {
-      title: filterName,
-      count: ALL_TASKS.filter(({tags}) => {
+      filterCount = ALL_TASKS.filter(({repeatingDays}) => {
+        const isRepeat = Object.keys(repeatingDays).some((day) => repeatingDays[day]);
+        return isRepeat;
+      }).length;
+      break;
+    case `tags` :
+      filterCount = ALL_TASKS.filter(({tags}) => {
         return tags.size > 0;
-      }).length
-    }; break;
-    case `archive` : filterElement = {
-      title: filterName,
-      count: ALL_TASKS.filter(({isArchive}) => {
+      }).length;
+      break;
+    case `archive` :
+      filterCount = ALL_TASKS.filter(({isArchive}) => {
         return isArchive;
-      }).length
-    }; break;
+      }).length;
+      break;
+    default: return false;
   }
-  return filterElement;
+  return {
+    title: filterName,
+    count: filterCount
+  };
 });
 
 

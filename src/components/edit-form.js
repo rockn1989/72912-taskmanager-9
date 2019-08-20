@@ -49,7 +49,7 @@ export const createEditFormTemplate = ({description, dueDate, repeatingDays, tag
                 </fieldset>
 
                 <button class="card__repeat-toggle" type="button">
-                  repeat:<span class="card__repeat-status">${ repeatingDays.We ? `yes` : `no`}</span>
+                  repeat:<span class="card__repeat-status">${ Object.keys(repeatingDays).some((day) => repeatingDays[day]) ? `yes` : `no`}</span>
                 </button>
 
                 <fieldset class="card__repeat-days">
