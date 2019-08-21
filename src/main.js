@@ -12,9 +12,15 @@ import {getFilter} from '../src/components/filter-data.js';
 
 import {createLoadMoreBtnTemplate} from '../src/components/load-btn.js';
 
+const COUNT_TASKS = 8;
+const MAX_TASKS = 7;
+const ALL_TASKS = [];
+const FILTERS = [`all`, `overdue`, `today`, `favorites`, `repeating`, `tags`, `archive`];
 const renderComponent = (container, component, position) => {
   document.querySelector(container).insertAdjacentHTML(position, component);
 };
+let editTask;
+let otherTasks;
 
 renderComponent(`.main__control`, createSiteMenuTemplate(), `beforeend`);
 renderComponent(`.main`, createSearchTemplate(), `beforeend`);
@@ -22,14 +28,6 @@ renderComponent(`.main`, createFilterTemplate(), `beforeend`);
 renderComponent(`.main`, createBoardTemaplate(), `beforeend`);
 renderComponent(`.board`, createBoardFilterTemplate(), `beforeend`);
 renderComponent(`.board`, createBoardTaskTemplate(), `beforeend`);
-
-
-const COUNT_TASKS = 17;
-const MAX_TASKS = 8;
-const ALL_TASKS = [];
-const FILTERS = [`all`, `overdue`, `today`, `favorites`, `repeating`, `tags`, `archive`];
-let editTask;
-let otherTasks;
 
 for (let i = 0; i < COUNT_TASKS; i++) {
   ALL_TASKS.push(getTask());
@@ -50,9 +48,7 @@ const FILTERS_DATA = FILTERS.map((filterName) => {
       filterCount = 0;
       break;
     case `favorites` :
-      filterCount = ALL_TASKS.filter(({isFavorite}) => {
-        return isFavorite;
-      }).length;
+      filterCount = ALL_TASKS.filter(({isFavorite}) => isFavorite).length;
       break;
     case `repeating` :
       filterCount = ALL_TASKS.filter(({repeatingDays}) => {
@@ -61,16 +57,12 @@ const FILTERS_DATA = FILTERS.map((filterName) => {
       }).length;
       break;
     case `tags` :
-      filterCount = ALL_TASKS.filter(({tags}) => {
-        return tags.size > 0;
-      }).length;
+      filterCount = ALL_TASKS.filter(({tags}) => tags.size > 0).length;
       break;
     case `archive` :
-      filterCount = ALL_TASKS.filter(({isArchive}) => {
-        return isArchive;
-      }).length;
+      filterCount = ALL_TASKS.filter(({isArchive}) => isArchive).length;
       break;
-    default: return false;
+    default: return 0;
   }
   return {
     title: filterName,
@@ -84,7 +76,7 @@ const renderTasks = (container, component) => {
 };
 
 renderTasks(`.board__tasks`, createEditFormTemplate(editTask));
-renderTasks(`.board__tasks`, otherTasks.slice(0, MAX_TASKS).map(createCardTemplate).join(``));
+renderTasks(`.board__tasks`, otherTasks.map(createCardTemplate).join(``));
 renderTasks(`.filter`, FILTERS_DATA.map(getFilter).join(``), `beforeend`);
 renderComponent(`.board`, createLoadMoreBtnTemplate(), `beforeend`);
 
